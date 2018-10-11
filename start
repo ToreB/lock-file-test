@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd target
+
+java -Dserver.port=8081 -jar lock-file-test-1.0-SNAPSHOT.jar > app1.log &
+echo "kill -9 $!" > stop
+java -Dserver.port=8082 -jar lock-file-test-1.0-SNAPSHOT.jar > app2.log &
+echo "kill -9 $!" >> stop
+java -Dserver.port=8083 -jar lock-file-test-1.0-SNAPSHOT.jar > app3.log &
+echo "kill -9 $!" >> stop
+java -Dserver.port=8084 -jar lock-file-test-1.0-SNAPSHOT.jar > app4.log &
+echo "kill -9 $!" >> stop
+
+tail -f app*.log
