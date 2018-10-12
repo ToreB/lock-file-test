@@ -21,7 +21,7 @@ public class ApplicationStarter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationStarter.class);
 
-    private static final long LOCK_TIMEOUT = 10000;
+    private static final long LOCK_TIMEOUT = 20000;
 
     public static void main(final String[] args) {
         SpringApplication.run(ApplicationStarter.class);
@@ -107,6 +107,10 @@ public class ApplicationStarter {
         final long millis = (long) (Math.random() * 15000);
         LOGGER.info("Starting processing! Duration {} milliseconds.", millis);
         Thread.sleep(millis);
+        if (Math.random() > 0.8) {
+            LOGGER.info("Sleeping 20 seconds to simulate a hang situation.");
+            Thread.sleep(20000);
+        }
         LOGGER.info("Done processing!");
 
         final long lockDuration = System.currentTimeMillis() - lastModified;
